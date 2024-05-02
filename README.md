@@ -7,10 +7,21 @@ A atividade tem como finalidade praticar os conceitos que foram abordados na Spr
 <br>
 
 <div align="center">
-![Captura de tela 2024-05-02 174230](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/d804457e-648f-48d2-8303-ce6f58e32cc5)
+
+![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/c57f6bb5-1377-44dc-a82e-53180d0598c0)
 </div>
-<br>
+
 
 # Pré-requisitos da Atividade<br>
 Antes de iniciar, é preciso observar quais requisitos foram apresentados para realizar da forma correta:<br>
-1. 
+1. Instalar e configurar o DOCKER ou CONTAINERD no host EC2;
+2. Efetuar Deploy de uma aplicação Wordpress com um contâiner de aplicação RDS Database MySQL;
+3. Configurar o uso do serviço EFS AWS para estáticos do contâiner de aplicação Wordpress;
+4. Configurar o serviço de Load Balancer AWS para a aplicação Wordpress.<br>
+
+# Pontos de Atenção
+Para essa atividade, será necessário atentar para algumas exceções fornecidas para executar de maneira correta:
+1. Não utilizar IP Público para saída do serviços Wordpress;
+2. As pastas públicas e estáticos do Wordpress é sugerido usar o serviço EFS AWS;
+3. É preciso demonstrar a aplicação do Wordpress funcionando;
+4. A aplicação Wordpress precisa estar rodando na porta 80 ou 8080.
