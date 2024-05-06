@@ -29,7 +29,7 @@ Para essa atividade, será necessário atentar para algumas exceções:<br>
 <br>
 
 <h1 align="center"> Prática da Atividade <br> </h1>
-<br>No início, vai ser necessário que realiza alguns passos para configurar a Network, conseguindo acessar de forma segura as instâncias e o Docker.<br>
+<br>Ao decorrer da prática, .<br>
 
 <ul>
 <li style="list-style-type: ⚙️" ><h3>VPC </h3>   </li>
@@ -55,7 +55,7 @@ Depois, você obterá essa pré-visualização:
 
 <ul>
 <li style="list-style-type: ⚙️" ><h3>Security Groups</h3></li>   
-- Agora, será preciso criar os <b>Security Groups</b>, para liberar acesso aos serviços.<br>
+- Agora, será preciso criar os <b>Security Groups</b>, para controlar o acesso das portas de comunicação dos serviços.<br>
 1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EC2</b>; <br>
 2. Depois, procure a opção  <b>Rede e Segurança</b> e clique em <b>Security groups</b>; <br>
 3. Após isso, clique na opção de <b>Criar security group</b>; <br>
@@ -98,7 +98,7 @@ Depois, você obterá essa pré-visualização:
  </div>
 <br>
 
- <b>Regras de Saída</b> - EFS<br>
+ <b>Regras de Entrada</b> - EFS<br>
  <div>
 <br>
    
@@ -140,7 +140,7 @@ Depois, você obterá essa pré-visualização:
 3. Nos tipos de Load balancer, selecione a opção <b>Classic Load Balancer</b> (abaixo das três opções) e aperte em <b>Criar</b>; <br>
 4. Em <b>Configuração básica</b>, coloque um nome para o Load balancer e selecione a opção de <b>Nível Gratuito</b>; <br>
 5. Abaixo, em <b>Mapeamento de rede</b>, selecione a VPC criada;<br>
-6. Em <b>Mapeamentos</b>, selecione as duas AZs, correspondendo-as para as <b>subnets privadas</b>;<br>
+6. Em <b>Mapeamentos</b>, selecione as duas AZs, correspondendo-as para as <b>subnets públicas</b>;<br>
 7. Na parte de <b>Grupos de segurança</b>, selecione o security group do Load Balancer;<br>
 9. Antes de finalizar, vá para <b>Verificação de Integridade</b> e coloque no <b>Caminho de ping</b> "/wp-admin/install.php", para filtrar o acesso do Wordpress; <br>
 10. Revise e clique em <b>Criar load balancer</b>.<br>
@@ -155,7 +155,7 @@ Depois, você obterá essa pré-visualização:
 
 <ul>
 <li style="list-style-type: ⚙️" ><h3>Pares de chaves</h3></li>   
-- Agora, será preciso utilizar o serviço <b>EC2</b>, para acessar o recurso chamado <b>Pares de Chaves</b>, o que limita ainda mais o acesso aos serviços. <br>
+- Agora, será preciso utilizar o serviço <b>EC2</b>, para acessar o recurso chamado <b>Pares de Chaves</b>, o que limita ainda mais o acesso externo aos serviços. <br>
 1. No console AWS, acesse o painel para entrar no serviço de <b>EC2</b> e procure a opção <b>Rede e Segurança</b>; <br>
 2. Depois, clique em <b>Pares de chaves</b> e selecione a opção de <b>Criar par de chaves</b>; <br>
 3. Escolha um nome para seu par de chaves; <br>
@@ -212,21 +212,24 @@ sudo chmod +x /usr/local/bin/docker-compose
 5. Em <b>Rede</b>, selecione a VPC criada para essa atividade e as subnets privadas criadas, depois cliquem em <b>Próximo</b>; <br>
 6. Em <b>Balanceamento de carga</b>, selecione a opção <b>Anexar a um balanceador de carga existente</b>. Abaixo, escolha a opção <b>Escolher entre Classic Load Balancers</b>, colocando o Load balancer criado; <br>
 7. Em <b>Verificações de integridade</b>, marque a opção de <b>Ative as verificações de integridade do Elastic Load Balancing</b>, depois clique em <b>Próximo</b>;<br>
-8. Em <b>Configurar tamanho do grpo e ajuste de escala</b>, insira o número 2 para a <b>Capacidade desejada</b>;<br>
+8. Em <b>Configurar tamanho do grupo e ajuste de escala</b>, insira o número 2 para a <b>Capacidade desejada</b>;<br>
 9. Em <b>Escabilidade</b>, insira o número 2 para a <b>Capacidade mínima desejada</b> e número 4 para <b>Capacidade
-máxima desejada</b>;
-10. Em <b>Ajuste de escala automática</b>, selecione a opção <b>Política de dimensionamento com monitoramento do objetivo</b>, depois coloque o número 75 em <b>Valor de destino</b> e clique em <b>Próximo</b>;
-11. Aperte em <b>Próximo</b> até chegar na revisão, depois clique em <b>Criar grupo do Auto Scaling</b>;
+máxima desejada</b>;<br>
+10. Em <b>Ajuste de escala automática</b>, selecione a opção <b>Política de dimensionamento com monitoramento do objetivo</b>, depois coloque o número 75 em <b>Valor de destino</b> e clique em <b>Próximo</b>;<br>
+11. Aperte em <b>Próximo</b> até chegar na revisão, depois clique em <b>Criar grupo do Auto Scaling</b>;<br>
 </ul>
 
 <ul>
 <li style="list-style-type: ⚙️" ><h3>Configuração EC2 - Conexão da Instância via Endpoint</h3></li>   
-- Agora, será preciso utilizar o serviço <b>VPC</b>, para acessar o recurso chamado <b>Endpoints</b>, o que limita ainda mais o acesso aos serviços. <br>
-1. No console AWS, acesse o painel para entrar no serviço de <b>EC2</b> e procure a opção <b>Rede e Segurança</b>; <br>
-2. Depois, clique em <b>Pares de chaves</b> e selecione a opção de <b>Criar par de chaves</b>; <br>
-3. Escolha um nome para seu par de chaves; <br>
-4. Selecione em <b>Tipo de par de chaves</b> a opção <b>RSA</b>;<br>
-5. Em <b>Formato de arquivo de chave privada</b>, selecione a opção de <b>.pem</b>; <br>
-6. Revise e clique em <b>Criar par de chaves</b>; <br>
+- Agora, será preciso utilizar o serviço <b>VPC</b>, para acessar o recurso chamado <b>Endpoints</b>, permitindo conexões entre uma VPC e serviços compatíveis, sem exigir o uso de um gateway da Internet. <br>
+1. No console AWS, acesse o painel para entrar no serviço de <b>VPC</b> e procure a opção <b>Nuvem privada virtual</b>; <br>
+2. Depois, clique em <b>Endpoints</b> e selecione a opção de <b>Criar endpoint</b>; <br>
+3. Escolha um nome para o endpoint; <br>
+4. Selecione em <b>Categoria de serviço</b> a opção <b>Endpoint do EC2 Instance Connect</b>;<br>
+5. Em <b>VPC</b>, selecione a VPC criada para essa atividade; <br>
+6. Em <b>Grupos de segurança</b>, selecione o grupo destinado para o endpoint;<br>
+7. Em <b>Subnet</b>, selecione uma subnet privada criada;
+8. Revise e clique em <b>Criar endpoint</b>;
 </ul>
+
 
