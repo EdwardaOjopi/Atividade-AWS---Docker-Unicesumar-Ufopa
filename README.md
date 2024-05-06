@@ -60,30 +60,6 @@ Depois, você obterá essa pré-visualização:
 3. Após isso, clique na opção de <b>Criar security group</b>; <br>
 4. Configure cada security group dessa forma:<br>
 </ul>
-  <b>Regras de Entrada</b> - Load Balancer<br>
-<div>
-
-![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/23c6c79f-c046-496e-9e2e-1bfdbb3b9f34)
-</div>
-<br>
-
-  <b>Regras de Entrada</b> - Servidor Web EC2<br>
-<div>
-<br>
-  
-  ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/0cfc84d6-5291-47d6-a87f-32fea8fba219)
-</div>
-   
-<br>
-
-<ul>
-<li style="list-style-type: 🔔" ><h3>Gerar o EFS</h3></li>   
-- Agora, será preciso utilizar o serviço <b>Elastic File System(EFS)</b>, para criar e configurar sistemas de arquivos compartilhados aos serviços de computação da AWS.<br>
-1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EC2</b>; <br>
-2. Depois, procure a opção  <b>Rede e Segurança</b> e clique em <b>Security groups</b>; <br>
-3. Após isso, clique na opção de <b>Criar security group</b>; <br>
-4. Crie e configure cada security group dessa forma:
-</ul>
 
 > [!NOTE]
 > Para facilitar, você pode criar sem nenhuma regras, tanto de entrada como saída, para mais tarde associar à origem certa.
@@ -102,7 +78,7 @@ Depois, você obterá essa pré-visualização:
   
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/dbb16f55-49af-4693-b37e-fed1b3b96027)
 </div>
-
+<br>
    <b>Regras de Entrada</b> - Servidor Web EC2 <br>
   <div>
   <br>
@@ -116,7 +92,7 @@ Depois, você obterá essa pré-visualização:
 
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/670a66ef-5a06-4df9-9864-703e471a6f13)
   </div>
-
+<br>
  
  <b>Regras de Saída</b> - Conexão via Endpoint <br>
  <div>
@@ -124,10 +100,24 @@ Depois, você obterá essa pré-visualização:
 
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/83dbc0a6-47b4-48d1-afe1-a077371c40a8)
  </div>
+<br>
 
  <b>Regras de Saída</b> - EFS<br>
  <div>
 <br>
+   
+   ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/2466c93c-44c1-4230-84b3-f31d0931dd57)
+ </div> 
+
+
+<ul>
+<li style="list-style-type: 🔔" ><h3>Gerar o EFS</h3></li>   
+- Agora, será preciso utilizar o serviço <b>Elastic File System(EFS)</b>, para criar e configurar sistemas de arquivos compartilhados aos serviços de computação da AWS.<br>
+1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EC2</b>; <br>
+2. Depois, procure a opção  <b>Rede e Segurança</b> e clique em <b>Security groups</b>; <br>
+3. Após isso, clique na opção de <b>Criar security group</b>; <br>
+4. Crie e configure cada security group dessa forma:
+</ul>
    
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/df13dad1-391c-47c8-9ddb-f69979e2efbd)
  </div>
