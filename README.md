@@ -26,7 +26,7 @@ Para essa atividade, será necessário atentar para algumas exceções:<br>
 2. As pastas públicas e estáticos do Wordpress é sugerido usar o serviço EFS AWS;
 3. É preciso demonstrar a aplicação do Wordpress funcionando;
 4. A aplicação Wordpress precisa estar rodando na porta 80 ou 8080.<br>
-
+<br>
 <h1 align="center"> Prática da Atividade <br> </h1>
 <br>No início, vai ser necessário que realiza alguns passos para configurar a Network, conseguindo acessar de forma segura as instâncias e o Docker.<br>
 
@@ -67,7 +67,8 @@ Depois, você obterá essa pré-visualização:
   <br>
   <b>Regras de Entrada</b> - Load Balancer<br>
 <div>
-
+<br>
+  
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/ff4cc816-087c-40e6-a028-58b1ed3d6e11)
 </div>
 <br>
@@ -76,15 +77,9 @@ Depois, você obterá essa pré-visualização:
 <div>
 <br>
   
-![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/dbb16f55-49af-4693-b37e-fed1b3b96027)
+![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/8b0da9aa-c4ca-4223-a17e-b1d0ab8bf9b2)
 </div>
 <br>
-   <b>Regras de Entrada</b> - Servidor Web EC2 <br>
-  <div>
-  <br>
-
-  ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/7280a53f-ae89-426d-bc0c-938c9b993a0f)
- </div>
 
   <b>Regras de Entrada</b> - RDS<br>
   <div>
@@ -108,19 +103,45 @@ Depois, você obterá essa pré-visualização:
    
    ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/2466c93c-44c1-4230-84b3-f31d0931dd57)
  </div> 
-
+<br>
 
 <ul>
 <li style="list-style-type: 🔔" ><h3>Gerar o EFS</h3></li>   
 - Agora, será preciso utilizar o serviço <b>Elastic File System(EFS)</b>, para criar e configurar sistemas de arquivos compartilhados aos serviços de computação da AWS.<br>
-1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EC2</b>; <br>
-2. Depois, procure a opção  <b>Rede e Segurança</b> e clique em <b>Security groups</b>; <br>
-3. Após isso, clique na opção de <b>Criar security group</b>; <br>
-4. Crie e configure cada security group dessa forma:
+1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EFS</b>; <br>
+2. Ao acessar a tela, procure a opção  <b>Criar sistema de arquivos</b>; <br>
+3. Após isso, clique na opção de <b>Personalizar</b>; <br>
+4. Agora, iremos passar por 4 passos.<br>
+ - No primeiro, você somente irá mudar o nome do EFS;<br>
+ - No segundo, selecione a VPC criada para a atividade, além de escolher as subnets privadas e escolher o Security group do EFS, criado na etapa passada;<br>
+ - No terceiro, apenas aperta próximo;<br>
+ - No quarto, revise se está de acordo e clique em Criar.<br>
 </ul>
-   
-![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/df13dad1-391c-47c8-9ddb-f69979e2efbd)
- </div>
- 
 
+<ul>
+<li style="list-style-type: 🔔" ><h3>Gerar o RDS</h3></li>   
+- Agora, será preciso utilizar o serviço <b>Relational Database Service(RDS)</b>, para ter um serviço de banco de dados relacional fácil de gerenciar os dados do Wordpress. <br>
+1. Pelo console AWS, acesse o painel para entrar no serviço de <b>RDS</b>; <br>
+2. Depois, procure a opção  <b>Banco de Dados</b> e clique em <b>Criar bando de dados</b>; <br>
+3. Na tela para configuração, em <b>Opções do mecanismo</b>, selecione o tipo <b>MySql</b>; <br>
+4. Em <b>Modelos</b>, selecione a opção de <b>Nível Gratuito</b>; <br>
+5. Abaixo, em <b>Configurações de credenciais</b>, é recomendado que coloque uma senha principal para mais segurança;<br>
+6. Em <b>Conectividade</b>, na parte de Nuvem privada virtual(VPC), selecione a VPC criada anteriormente;<br>
+7. Na parte de <b>Grupo de segurança da VPC existentes</b>, selecione o security group do RDS;<br>
+9. Antes de finalizar, vá para <b>Configuração adicional</b> e coloque um nome para o BD;<br>
+10. Revise e clique em <b>Criar banco de dados</b>;<br>
+</ul>
+<br>
 
+<li style="list-style-type: 🔔" ><h3>Gerar o Classic Load Balancer</h3></li>   
+- Agora, será preciso utilizar o serviço <b>EC2</b>, para acessar o Load Balancer, usando sua versão Classic:<br>
+1. No console AWS, acesse o painel para entrar no serviço de <b>EC2</b> e procure a opção <b>Balanceamento de carga</b>; <br>
+2. Depois, clique na opção <b>Criar load balancer</b>; <br>
+3. Nos tipos de Load balancer, selecione a opção <b>Classic Load Balancer</b> (abaixo das três opções) e aperte em <b>Criar</b>; <br>
+4. Em <b>Configuração básica</b, coloque um nome para o Load balancer. a opção de <b>Nível Gratuito</b>; <br>
+5. Abaixo, em <b>Mapeamento de rede</b>, selecione a VPC criada;<br>
+6. Em <b>Mapeamentos</b>, selecione as duas AZs, correspondendo-as para as <b>subnets privadas</b>;<br>
+7. Na parte de <b>Grupos de segurança</b>, selecione o security group do Load Balancer;<br>
+9. Antes de finalizar, vá para <b>Configuração adicional</b> e coloque um nome para o BD;<br>
+10. Revise e clique em <b>Criar banco de dados</b>;<br>
+</ul>
