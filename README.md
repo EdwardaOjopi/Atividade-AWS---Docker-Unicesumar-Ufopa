@@ -112,11 +112,10 @@ Depois, você obterá essa pré-visualização:
 1. Pelo console AWS, acesse o painel para entrar no serviço de <b>EFS</b>; <br>
 2. Ao acessar a tela, procure a opção  <b>Criar sistema de arquivos</b>; <br>
 3. Após isso, clique na opção de <b>Personalizar</b>; <br>
-4. Agora, iremos passar por 4 passos.<br>
- - No primeiro, você somente irá mudar o nome do EFS;<br>
- - No segundo, selecione a VPC criada para a atividade, além de escolher as subnets privadas e escolher o Security group do EFS, criado na etapa passada;<br>
- - No terceiro, apenas aperta próximo;<br>
- - No quarto, revise se está de acordo e clique em Criar.<br>
+4. Agora, você somente irá mudar o nome do EFS, depois clique em <b>Próximo</b>;<br>
+5. Selecione a VPC criada para a atividade, além de escolher as subnets privadas e escolher o Security group do EFS, criado na etapa passada, depois clique em <b>Próximo</b>; <br>
+6. Apenas aperta próximo;<br>
+7. Revise se está de acordo e clique em Criar.<br>
 </ul>
 
 <ul>
@@ -132,7 +131,6 @@ Depois, você obterá essa pré-visualização:
 9. Antes de finalizar, vá para <b>Configuração adicional</b> e coloque um nome para o BD;<br>
 10. Revise e clique em <b>Criar banco de dados</b>.<br>
 </ul>
-<br>
 
 <ul>
 <li style="list-style-type: ⚙️" ><h3>Classic Load Balancer</h3></li>   
@@ -180,7 +178,8 @@ Depois, você obterá essa pré-visualização:
 5. Em <b>Par de chaves (login)</b>, selecione a opção o par de chaves criado no passo anterior; <br>
 6. Em <b>Configurações de rede</b>, selecione o grupo de segurança do servidor web da EC2; <br>
 7. Para as <b>Tags de recurso</b>, coloque as informações que foram fornecidas para executar as instâncias, com os nomes <b>Name, CostCenter e Project</b>, além de selecionar os tipos de recurso como <b>Instâncias e Volumes</b>; <br>
-8. Antes de finalizar, clique em <b>Detalhes Avançados</b> e coloque no campo de <b>Dados do usuário</b> o script a seguir:<br>
+8. Antes de finalizar, clique em <b>Detalhes Avançados</b> e coloque no campo de <b>Dados do usuário</b> o script a seguir:
+<br>
 <pre><code>
 #!/bin/bash
 
@@ -194,8 +193,40 @@ sudo usermod -aG docker ec2-user
 
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose 
-</pre></code>  
-
+</pre></code>
+<br>
 9. Agora faça a revisão e clique em <b>Criar modelo de execução</b>.<br>
+</ul>
+
+> [!NOTE]
+> A seguir, o passo será bem longo. Olhe com atenção para não realizar algum erro mais a frente!
+<br>
+
+<ul>
+<li style="list-style-type: ⚙️" ><h3>Grupos Auto Scaling</h3></li>   
+- Agora, será preciso utilizar o serviço <b>EC2</b>, para acessar o recurso chamado <b>Grupos Auto Scaling</b>, o que ajuda a habilitar recursos de escalabilidade automática e gerenciar frotas. <br>
+1. No console AWS, acesse o painel para entrar no serviço de <b>EC2</b> e procure a opção <b>Auto Scaling</b>; <br>
+2. Depois, clique em <b>Grupos Auto Scaling</b> e selecione a opção de <b>Criar grupo de Auto Scaling</b>; <br>
+3. Escolha um nome para o grupo do Auto Scaling; <br>
+4. Em <b>Modelo de execuçãos</b>, coloque o modelo que foi criado no passo anterior, depois clique em <b>Próximo</b>;<br>
+5. Em <b>Rede</b>, selecione a VPC criada para essa atividade e as subnets privadas criadas, depois cliquem em <b>Próximo</b>; <br>
+6. Em <b>Balanceamento de carga</b>, selecione a opção <b>Anexar a um balanceador de carga existente</b>. Abaixo, escolha a opção <b>Escolher entre Classic Load Balancers</b>, colocando o Load balancer criado; <br>
+7. Em <b>Verificações de integridade</b>, marque a opção de <b>Ative as verificações de integridade do Elastic Load Balancing</b>, depois clique em <b>Próximo</b>;<br>
+8. Em <b>Configurar tamanho do grpo e ajuste de escala</b>, insira o número 2 para a <b>Capacidade desejada</b>;<br>
+9. Em <b>Escabilidade</b>, insira o número 2 para a <b>Capacidade mínima desejada</b> e número 4 para <b>Capacidade
+máxima desejada</b>;
+10. Em <b>Ajuste de escala automática</b>, selecione a opção <b>Política de dimensionamento com monitoramento do objetivo</b>, depois coloque o número 75 em <b>Valor de destino</b> e clique em <b>Próximo</b>;
+11. Aperte em <b>Próximo</b> até chegar na revisão, depois clique em <b>Criar grupo do Auto Scaling</b>;
+</ul>
+
+<ul>
+<li style="list-style-type: ⚙️" ><h3>Configuração EC2 - Conexão da Instância via Endpoint</h3></li>   
+- Agora, será preciso utilizar o serviço <b>VPC</b>, para acessar o recurso chamado <b>Endpoints</b>, o que limita ainda mais o acesso aos serviços. <br>
+1. No console AWS, acesse o painel para entrar no serviço de <b>EC2</b> e procure a opção <b>Rede e Segurança</b>; <br>
+2. Depois, clique em <b>Pares de chaves</b> e selecione a opção de <b>Criar par de chaves</b>; <br>
+3. Escolha um nome para seu par de chaves; <br>
+4. Selecione em <b>Tipo de par de chaves</b> a opção <b>RSA</b>;<br>
+5. Em <b>Formato de arquivo de chave privada</b>, selecione a opção de <b>.pem</b>; <br>
+6. Revise e clique em <b>Criar par de chaves</b>; <br>
 </ul>
 
