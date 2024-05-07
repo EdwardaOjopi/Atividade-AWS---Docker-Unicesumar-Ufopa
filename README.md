@@ -156,6 +156,7 @@ Depois, você obterá essa pré-visualização:
 5. Em <b>Formato de arquivo de chave privada</b>, selecione a opção de <b>.ppk</b>; <br>
 6. Revise e clique em <b>Criar par de chaves</b>; <br>
 </ul>
+<br>
 
 > [!NOTE]
 > Ao finalizar, a chave será baixada. Guarde em um local seguro e de fácil recordação para utilizar mais a frente!
@@ -173,9 +174,10 @@ Depois, você obterá essa pré-visualização:
 7. Também observe em <b>Configuração avançada de rede</b>, para confirmar se a opção <b>Atribuir IP público automaticamente</b> está habilitada;<br>
 8. Para as <b>Tags de recurso</b>, coloque as informações que foram fornecidas para executar as instâncias, com os nomes <b>Name, CostCenter e Project</b>, além de selecionar os tipos de recurso como <b>Instâncias e Volumes</b>; <br>
 9. Antes de finalizar, clique em <b>Detalhes Avançados</b> e coloque no campo de <b>Dados do usuário</b> o script a seguir:<br>
+<br>
   
 > [!NOTE]
-> Atente para a sintaxe, pois pode dar erro ao executar esse script!
+> Atente para a identação, pois pode dar erro ao executar esse script!
   
 <br>
 <pre><code>
@@ -197,31 +199,30 @@ sudo systemctl enable amazon-efs-utils
 
 sudo mkdir /mnt/efs
 
-echo "fs-0b7f0a539936e3561.efs.us-east-1.amazonaws.com:/ /efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab
-sudo mount -a
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport [id do efs]:/ /mnt/efs
+echo "[id do efs]:/ /mnt/efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0" >> /etc/fstab
 
-sudo mkdir /efs/wordpress
+sudo mkdir /mnt/efs/wordpress
 
-cat <<EOF>> /mnt/efs/docker-compose.yaml
+cat <<EOF>  /mnt/efs/docker-compose.yaml
 version: '3.8'
 services:
-wordpress:
-image: wordpress:latest
-container_name: wordpress
-ports:
-- "80:80"
-environment:
-WORDPRESS_DB_HOST: database-2.c9qoc6cw490u.us-east-1.rds.amazonaws.com
-WORDPRESS_DB_USER: edwarda
-WORDPRESS_DB_PASSWORD: duda0202
-WORDPRESS_DB_NAME: dockerwsdb
-volumes:
-  - /mnt/efs/wordpress:/var/www/html
-
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    ports:
+      - "80:80"
+    environment:
+      WORDPRESS_DB_HOST: database-2.c9qoc6cw490u.us-east-1.rds.amazonaws.com
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: admin123
+      WORDPRESS_DB_NAME: docker_db
+      WORDPRESS_TABLE_PREFIX: wpsite
+    volumes:
+      - /mnt/efs/wordpress:/var/www/html
 EOF
 
-cd /home/ec2-user
-sudo docker-compose up -d >> /home/ec2-user/log
+docker-compose -f /mnt/efs/docker-compose.yaml up -d 2>> /home/ec2-user/log
 </pre></code>
 <br>
 9. Agora faça a revisão e clique em <b>Criar modelo de execução</b>.<br>
@@ -247,4 +248,41 @@ máxima desejada</b>;<br>
 10. Em <b>Ajuste de escala automática</b>, selecione a opção <b>Política de dimensionamento com monitoramento do objetivo</b>, depois coloque o número 75 em <b>Valor de destino</b> e clique em <b>Próximo</b>;<br>
 11. Aperte em <b>Próximo</b> até chegar na revisão, depois clique em <b>Criar grupo do Auto Scaling</b>;<br>
 </ul>
+
+<ul>
+<li style="list-style-type: ⚙️" ><h3>Acesso SSH</h3></li>   
+- Agora, será preciso utilizar a chave que foi baixada anteriormente, que dará acesso ao ambiente de conexão SSH: <b>Putty</b>. Isso facilitará para colocar os detalhes finais da atividade. <br>
+1. No aplicativo do Putty, coloque o usuário@ipdamáquina para identificação e também, inserir a chave que foi baixada.
+3. Com isso, a instância será aberta no aplicativo. <br>
+4. Agora, execute uma série de comandos, para que:<br>
+  - Comprove a montagem da instância:<br>
+  ```
+  df -h
+  ```
+  ou
+  ```
+  cat /etc/fstab
+  ```
+  - Que comprove a instalação do docker:<br>
+  ```
+  docker ps
+  ```
+  <br>
+5. Em <b>Formato de arquivo de chave privada</b>, selecione a opção de <b>.ppk</b>; <br>
+6. Revise e clique em <b>Criar par de chaves</b>; <br>
+</ul>
+<br>
+
+
+WORDPRESS
+<div>
+<br>
+  
+![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/7ced1140-9d88-40dc-b61d-00f35bd3eac5)
+</div>
+
+<div>
+
+![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/3436e41b-f6ea-4c69-96a6-92a0c930b042)  
+</div>
 
