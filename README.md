@@ -183,18 +183,17 @@ Depois, você obterá essa pré-visualização:
 
 sudo yum update -y
 
-sudo yum install docker -y 
+sudo yum install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
 
 sudo usermod -aG docker ec2-user
-
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-sudo yum install nfs-utils -y
-sudo systemctl start nfs-utils
-sudo systemctl enable nfs-utils
+sudo yum install amazon-efs-utils -y
+sudo systemctl start amazon-efs-utils
+sudo systemctl enable amazon-efs-utils
 
 sudo mkdir /mnt/efs
 
@@ -203,22 +202,22 @@ sudo mount -a
 
 sudo mkdir /efs/wordpress
 
-cat <<EOF >>  /home/ec2-user/docker-compose.yaml
+cat <<EOF>> /mnt/efs/docker-compose.yaml
 version: '3.8'
 services:
-  wordpress:
-    image: wordpress:latest
-    container_name: wordpress
-    ports:
-      - "80:80"
-    environment:
-      WORDPRESS_DB_HOST: database-2.c9qoc6cw490u.us-east-1.rds.amazonaws.com
-      WORDPRESS_DB_USER: edwarda
-      WORDPRESS_DB_PASSWORD: duda0202
-      WORDPRESS_DB_NAME: dockerwsdb
+wordpress:
+image: wordpress:latest
+container_name: wordpress
+ports:
+- "80:80"
+environment:
+WORDPRESS_DB_HOST: database-2.c9qoc6cw490u.us-east-1.rds.amazonaws.com
+WORDPRESS_DB_USER: edwarda
+WORDPRESS_DB_PASSWORD: duda0202
+WORDPRESS_DB_NAME: dockerwsdb
+volumes:
+  - /mnt/efs/wordpress:/var/www/html
 
-    volumes:
-      - /mnt/efs/wordpress:/var/www/html
 EOF
 
 cd /home/ec2-user
