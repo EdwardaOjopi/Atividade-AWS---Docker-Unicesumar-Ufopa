@@ -250,39 +250,48 @@ máxima desejada</b>;<br>
 </ul>
 
 <ul>
-<li style="list-style-type: ⚙️" ><h3>Acesso SSH</h3></li>   
-- Agora, será preciso utilizar a chave que foi baixada anteriormente, que dará acesso ao ambiente de conexão SSH: <b>Putty</b>. Isso facilitará para colocar os detalhes finais da atividade. <br>
-1. No aplicativo do Putty, coloque o usuário@ipdamáquina para identificação e também, inserir a chave que foi baixada.
-3. Com isso, a instância será aberta no aplicativo. <br>
-4. Agora, execute uma série de comandos, para que:<br>
-  - Comprove a montagem da instância:<br>
-  ```
-  df -h
-  ```
-  ou
-  ```
-  cat /etc/fstab
-  ```
-  - Que comprove a instalação do docker:<br>
-  ```
-  docker ps
-  ```
-  <br>
-5. Em <b>Formato de arquivo de chave privada</b>, selecione a opção de <b>.ppk</b>; <br>
-6. Revise e clique em <b>Criar par de chaves</b>; <br>
-</ul>
-<br>
-
-
-WORDPRESS
+<li style="list-style-type: ⚙️" ><h3>Site do Wordpress</h3></li>   
+- Agora, vamos configurar o site do <b>Wordpress</b>: <br>
+1. Acesse o DNS pelo Load Balancer e insira no campo URL do navegador; <br>
+2. Na tela de instalação, coloque o idioma que prefere e clique em <b>Continuar</b>; <br>
+3. Preencha os dados de usuário para cadastrar; <br>
+  
+>[!NOTE]
+>Não esqueça dessa senha!! Guarde para recordar na hora de fazer o login!
+  
 <div>
 <br>
   
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/7ced1140-9d88-40dc-b61d-00f35bd3eac5)
 </div>
-
+<br>
+4. Termine a instalação ao clicar em <b>Instalar</b>;<br>
+5. Depois, acessa a página pelo login; <br>
 <div>
+<br>
 
 ![image](https://github.com/EdwardaOjopi/Atividade-AWS---Docker-Unicesumar-Ufopa/assets/114951492/3436e41b-f6ea-4c69-96a6-92a0c930b042)  
 </div>
+<br>
 
+<ul>
+<li style="list-style-type: ⚙️" ><h3>Acesso SSH</h3></li>   
+- Agora, será preciso utilizar a chave que foi baixada anteriormente, que dará acesso ao ambiente de conexão SSH: <b>Putty</b>. Isso facilitará para colocar os detalhes finais da atividade. <br>
+1. No aplicativo do Putty, coloque o usuário@ipdamáquina para identificação e também, inserir a chave que foi baixada.
+3. Com isso, a instância será aberta no aplicativo. <br>
+4. Agora, execute uma série de comandos, para que:<br>
+- Comprove a montagem da instância:<br>
+  <code>df -h</code> ou <code>cat /etc/fstab</code>.<br>
+ 
+- Que comprove a instalação do docker:<br>
+  <code>docker ps</code>
+  <br>
+  
+5. Depois, teremos que continuar a instalação, mas primeiro, é preciso executar o docker instalado anteriormente.
+- Utilize <code>docker exec -it [três primeiros dígitos do docker] /bin/bash</code>
+- Após isso, iremos instalar o client do MySQL, com <code>apt-get update</code> e <code>apt-get install default-mysql-client -y</code>
+- Agora, você irá conectar com o Database criado no serviço RDS, com <code>mysql -h [endpoint do database] -u [usuário do database] -p</code>
+- Seguindo, você terá acesso, inserindo sua senha antes criada.
+- Ao entrar, você pode guiar através dos comandos <code>show databases;</code>, para listar os bancos de dados disponíveis, <code>use [nome do database do docker];</code>, para selecionar o banco de dados do docker, e <code>show tables;</code>, para listar todas as tabelas criadas dentro do banco de dados docker.
+</ul>
+<br>
